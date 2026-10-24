@@ -1,0 +1,76 @@
+<Window x:Class="TapoDesktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vlc="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
+        Title="Tapo Desktop — TC70" Height="760" Width="1180" MinHeight="610" MinWidth="950"
+        Background="#0B1220" Foreground="#E2E8F0" Closing="Window_Closing">
+  <Grid Margin="18">
+    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <DockPanel Grid.Row="0" Margin="0,0,0,16">
+      <TextBlock Text="TAPO DESKTOP" FontSize="23" FontWeight="Bold" Foreground="White" />
+      <TextBlock Text="  /  TC70 local camera" FontSize="15" Foreground="#94A3B8" VerticalAlignment="Bottom" />
+    </DockPanel>
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions><ColumnDefinition Width="310"/><ColumnDefinition Width="16"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+      <Border Grid.Column="0" Background="#172337" CornerRadius="12" Padding="15">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel>
+            <TextBlock Text="Camera connection" FontSize="17" FontWeight="Bold" Margin="0,0,0,14" />
+            <TextBlock Text="Camera IPv4 address" Foreground="#CBD5E1"/>
+            <TextBox x:Name="IpText" Text="192.168.1.50" />
+            <TextBlock Text="Camera Account username" Foreground="#CBD5E1" Margin="0,10,0,0"/>
+            <TextBox x:Name="UserText" Text="" />
+            <TextBlock Text="Camera Account password" Foreground="#CBD5E1" Margin="0,10,0,0"/>
+            <PasswordBox x:Name="PasswordInput" />
+            <TextBlock Text="Stream" Foreground="#CBD5E1" Margin="0,10,0,0"/>
+            <ComboBox x:Name="StreamPicker" SelectedIndex="0" Margin="3,5" Padding="6" >
+              <ComboBoxItem Content="High quality (stream1)" Tag="stream1" />
+              <ComboBoxItem Content="Standard quality (stream2)" Tag="stream2" />
+            </ComboBox>
+            <WrapPanel Margin="0,12,0,10">
+              <Button x:Name="ConnectButton" Content="Connect video" Click="Connect_Click" />
+              <Button Content="Disconnect" Click="Disconnect_Click" Background="#475569" />
+            </WrapPanel>
+            <Separator Margin="0,12" Background="#334155" />
+            <TextBlock Text="Pan / tilt" FontSize="17" FontWeight="Bold" Margin="0,0,0,6"/>
+            <Button Content="Initialize ONVIF PTZ" Click="PtzInitialize_Click" Background="#155E75" />
+            <TextBlock Text="Press an arrow for a short movement. TC70 has no optical-zoom motor." TextWrapping="Wrap" FontSize="12" Foreground="#94A3B8" Margin="2,8,0,10"/>
+            <Grid HorizontalAlignment="Center" Margin="0,0,0,4">
+              <Grid.RowDefinitions><RowDefinition Height="42"/><RowDefinition Height="42"/><RowDefinition Height="42"/></Grid.RowDefinitions>
+              <Grid.ColumnDefinitions><ColumnDefinition Width="55"/><ColumnDefinition Width="55"/><ColumnDefinition Width="55"/></Grid.ColumnDefinitions>
+              <Button Grid.Row="0" Grid.Column="1" Content="▲" Tag="up" Click="PtzMove_Click"/>
+              <Button Grid.Row="1" Grid.Column="0" Content="◀" Tag="left" Click="PtzMove_Click"/>
+              <Button Grid.Row="1" Grid.Column="1" Content="Stop" Click="PtzStop_Click" Background="#B45309" FontSize="11"/>
+              <Button Grid.Row="1" Grid.Column="2" Content="▶" Tag="right" Click="PtzMove_Click"/>
+              <Button Grid.Row="2" Grid.Column="1" Content="▼" Tag="down" Click="PtzMove_Click"/>
+            </Grid>
+            <Separator Margin="0,10" Background="#334155" />
+            <TextBlock Text="Local recording" FontSize="17" FontWeight="Bold" Margin="0,0,0,6"/>
+            <TextBlock Text="Install FFmpeg separately and place ffmpeg.exe beside the app or in PATH." TextWrapping="Wrap" FontSize="12" Foreground="#94A3B8"/>
+            <WrapPanel Margin="0,10,0,0">
+              <Button Content="Start recording" Click="RecordStart_Click" Background="#B91C1C"/>
+              <Button Content="Stop recording" Click="RecordStop_Click" Background="#475569"/>
+            </WrapPanel>
+            <Button Content="Open recording folder" Click="OpenRecordings_Click" Background="#334155" Margin="4,8" />
+          </StackPanel>
+        </ScrollViewer>
+      </Border>
+      <Border Grid.Column="2" Background="#101928" CornerRadius="12" Padding="10">
+        <Grid>
+          <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+          <DockPanel Grid.Row="0" Margin="8,4,8,10">
+            <TextBlock Text="LIVE VIEW" FontSize="15" FontWeight="Bold" Foreground="#CBD5E1"/>
+            <TextBlock Text="  •  Tapo TC70" Foreground="#94A3B8"/>
+          </DockPanel>
+          <Border Grid.Row="1" Background="Black" CornerRadius="6" ClipToBounds="True">
+            <vlc:VideoView x:Name="VideoView" />
+          </Border>
+          <TextBlock Grid.Row="2" Text="Local RTSP video • Default port 554 • The video panel stays blank until you connect." Margin="6,10,0,0" Foreground="#94A3B8" FontSize="12"/>
+        </Grid>
+      </Border>
+    </Grid>
+    <Border Grid.Row="2" CornerRadius="6" Background="#172337" Margin="0,12,0,0" Padding="10">
+      <TextBlock x:Name="StatusText" Text="Ready. Enter your TC70 Camera Account details to connect." Foreground="#BAE6FD" TextWrapping="Wrap" />
+    </Border>
+  </Grid>
+</Window>

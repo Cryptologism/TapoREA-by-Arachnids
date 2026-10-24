@@ -1,0 +1,18 @@
+## .NET build output
+bin/
+obj/
+publish/
+dist/
+
+## Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+
+## FFmpeg binary (not redistributed — user supplies their own licensed build)
+ffmpeg.exe
+
+## OS cruft
+Thumbs.db
+.DS_Store
